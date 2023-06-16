@@ -1,24 +1,11 @@
-import { expectType, expectAssignable } from 'tsd'
-import pProps, { Options } from './index.js'
-
-const options: Options = {}
+import { expectType } from 'tsd'
+import pProps from './index.js'
 
 expectType<Promise<{ [key in 'foo']: string }>>(pProps({ foo: 'bar' }))
-expectType<Promise<{ [key in 'foo']: boolean }>>(
-  pProps({ foo: 'bar' }, (value, key) => {
-    expectType<string>(value)
-    expectType<'foo'>(key)
-    return Math.random() > 0.5 ? false : Promise.resolve(true)
-  }),
-)
-expectType<Promise<{ [key in 'foo']: boolean }>>(
+expectType<Promise<{ [key in 'foo']: string }>>(pProps({ foo: 'bar' }))
+expectType<Promise<{ [key in 'foo']: string }>>(
   pProps(
     { foo: 'bar' },
-    (value, key) => {
-      expectType<string>(value)
-      expectType<'foo'>(key)
-      return Math.random() > 0.5 ? false : Promise.resolve(true)
-    },
     {
       concurrency: 1,
     },
@@ -32,26 +19,6 @@ const hashMap = {
 
 expectType<Promise<{ [key in 'unicorn' | 'foo']: string | number }>>(
   pProps(hashMap),
-)
-expectType<Promise<{ [key in 'unicorn' | 'foo']: boolean }>>(
-  pProps(hashMap, (value, key) => {
-    expectType<string | number>(value)
-    expectAssignable<string>(key)
-    return Math.random() > 0.5 ? false : Promise.resolve(true)
-  }),
-)
-expectType<Promise<{ [key in 'unicorn' | 'foo']: boolean }>>(
-  pProps(
-    hashMap,
-    (value, key) => {
-      expectType<string | number>(value)
-      expectAssignable<string>(key)
-      return Math.random() > 0.5 ? false : Promise.resolve(true)
-    },
-    {
-      concurrency: 1,
-    },
-  ),
 )
 
 const partialMap: { foo?: Promise<string> } = {}
@@ -68,22 +35,7 @@ expectType<string | undefined>(result.get(1))
 
 expectType<Promise<Map<number, string>>>(pProps(map))
 expectType<Promise<Map<number, number>>>(
-  pProps(map, (value, key) => {
-    expectType<string>(value)
-    expectType<number>(key)
-    return Math.random() > 0.5 ? 1 : Promise.resolve(2)
+  pProps(map, {
+    concurrency: 1,
   }),
-)
-expectType<Promise<Map<number, number>>>(
-  pProps(
-    map,
-    (value, key) => {
-      expectType<string>(value)
-      expectType<number>(key)
-      return Math.random() > 0.5 ? 1 : Promise.resolve(2)
-    },
-    {
-      concurrency: 1,
-    },
-  ),
 )
