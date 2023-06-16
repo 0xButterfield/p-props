@@ -7,7 +7,7 @@ Useful when you need to run multiple promises concurrently and keep track of the
 ## Install
 
 ```
-$ npm install p-props
+$ npm install @0xbutterfield/p-props
 ```
 
 ## Usage
@@ -41,21 +41,15 @@ console.log(await pProps(sites));
 
 ## API
 
-### pProps(map, mapper?, options?)
+### pProps(map, options?)
 
-Returns a `Promise` that is fulfilled when all promises in `map` and ones returned from `mapper` are fulfilled, or rejects if any of the promises reject. The fulfilled value is the same as `map`, but with a fulfilled version of each entry value, or the fulfilled value returned from `mapper`, if defined.
+Returns a `Promise` that is fulfilled when all promises in `map` are fulfilled, or rejects if any of the promises reject. The fulfilled value is the same as `map`, but with a fulfilled version of each entry value.
 
 #### map
 
 Type: `Map | object`
 
 Resolves entry values that are promises. Other values are passed through.
-
-#### mapper(value, key)
-
-Type: `Function`
-
-Receives the current value and key as parameters. If a value is a `Promise`, `mapper` will receive the value this `Promise` resolves to. Expected to return a `Promise` or value.
 
 #### options
 
