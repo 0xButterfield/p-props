@@ -1,6 +1,6 @@
 {
   "name": "@0xbutterfield/p-props",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Like `Promise.all()` but for `Map` and `Object`",
   "license": "MIT",
   "repository": "sindresorhus/p-props",
